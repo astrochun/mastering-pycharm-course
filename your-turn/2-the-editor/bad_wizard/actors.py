@@ -18,6 +18,10 @@ class Creature:
 class Wizard(Creature):
 
     def attack(self, creature):
+        """
+        Extra documentation
+        """
+
         print("The wizard {} attacks {}!".format(
             self.name, creature.name
         ))
@@ -34,6 +38,9 @@ class Wizard(Creature):
         else:
             print("The wizard has been DEFEATED!!!")
             return False
+
+    def wake_up(self):
+        print("The wizard {} awakens".format(self.name))
 
 
 class SmallAnimal(Creature):
