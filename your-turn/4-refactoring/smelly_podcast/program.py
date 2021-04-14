@@ -1,10 +1,4 @@
-from collections import namedtuple
-from xml.etree import ElementTree
-
-import requests
-
-Episode = namedtuple('Episode', 'title link pubdate show_id')
-episode_data = {}
+from service import Episode, episode_data, get_latest_show_id, download_data, get_episode
 
 
 def main():
@@ -31,30 +25,6 @@ def display_results(latest_show_id, oldest_show_id):
         # GET EPISODE
         info = get_episode(show_id)
         print("{}. {}".format(info.show_id, info.title))
-
-
-def get_episode(show_id):
-    return episode_data.get(show_id)
-
-
-def get_latest_show_id():
-    return max(episode_data.keys())
-
-
-def download_data():
-    url = 'https://talkpython.fm/episodes/rss'
-    resp = requests.get(url)
-    resp.raise_for_status()
-    dom = ElementTree.fromstring(resp.text)
-    episode_count = len(dom.findall('channel/item'))
-    for idx, item in enumerate(dom.findall('channel/item')):
-        episode = Episode(
-            item.find('title').text,
-            item.find('link').text,
-            item.find('pubDate').text,
-            episode_count - idx - 1
-        )
-        episode_data[episode.show_id] = episode
 
 
 def show_header():
